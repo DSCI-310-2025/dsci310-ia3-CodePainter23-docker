@@ -27,18 +27,18 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v3
         with:
           images: rchen34/dsci310-ia3-codepainter23-docker
 
       - name: Build and push Docker image
         id: push
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        uses: docker/build-push-action@v3
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ rchen34/dsci310-ia3-codepainter23-docker}}
+          tags: ${{ steps.meta.outputs.labels}}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
