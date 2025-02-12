@@ -36,5 +36,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.labels}}
+          tags: rchen34/dsci310-ia3-codepainter23-docker
           labels: ${{ steps.meta.outputs.labels }}
