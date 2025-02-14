@@ -26,9 +26,12 @@ jobs:
           password: ${{ secrets.PASSWORD }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v5
         with:
           images: rchen34/dsci310-ia3-codepainter23-docker
+          tags: |
+            type=raw, value={{sha}},enable=${{github.ref_type != 'tag' }}
+            type=raw, value=latest
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v3
@@ -36,5 +39,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: rchen34/dsci310-ia3-codepainter23-docker
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
